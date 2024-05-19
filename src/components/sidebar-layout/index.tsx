@@ -29,7 +29,7 @@ export default async function SideBarLayout({ children }: { children?: ReactNode
             </div>
           </div>
 
-          <div className="w-full h-[calc(100vh-var(--navbar-height))] overflow-y-scroll scroll-smooth p-6">
+          <div className="relative w-full h-[calc(100vh-var(--navbar-height))] overflow-y-scroll scroll-smooth p-6">
             {children}
           </div>
         </div>
