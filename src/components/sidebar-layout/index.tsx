@@ -22,7 +22,7 @@ export default async function SideBarLayout({ children }: { children?: ReactNode
           <SideBar />
         </aside>
         <div className="col-span-10 w-full h-full relative">
-          <div className="w-full h-[var(--navbar-height)] flex flex-row justify-center gap-4 items-center border-b-2 px-4 py-3">
+          <div className="w-full h-[var(--navbar-height)] flex flex-row justify-center gap-4 items-center border-b-2 px-4 py-2">
             <PageTitle />
             <div className="absolute right-4 flex flex-row items-center gap-3 justify-center">
               <UserSessionDisplay session={session} />
