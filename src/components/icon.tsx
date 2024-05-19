@@ -16,6 +16,7 @@ import {
   SendHorizontal,
   X,
   MessageCircle,
+  SquareGantt,
 } from 'lucide-react';
 
 const Icon = ({ name, size = 24, className = '' }: { name: string; size?: number; className?: string }) => {
@@ -59,6 +60,9 @@ const Icon = ({ name, size = 24, className = '' }: { name: string; size?: number
       break;
     case 'close':
       WrappingEle = X;
+      break;
+    case 'sqrGantt':
+      WrappingEle = SquareGantt;
       break;
     case 'message':
       WrappingEle = MessageCircle;
