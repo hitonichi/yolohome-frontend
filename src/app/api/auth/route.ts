@@ -3,7 +3,8 @@ import { NextRequest, NextResponse } from 'next/server';
 const MOCK_USERS = [
   {
     id: '001',
-    name: 'John Doe',
+    firstName: 'John',
+    lastName: 'Doe',
     email: 'test@gmail.com',
     password: '1',
   },

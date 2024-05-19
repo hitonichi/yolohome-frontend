@@ -1,12 +1,7 @@
 import type { NextAuthConfig } from 'next-auth';
 
 const isOnProtectedRoute = (route: string): boolean => {
-  return (
-    route.startsWith('/dashboard') ||
-    route.startsWith('/settings') ||
-    route.startsWith('/profile') ||
-    route.startsWith('/cart ')
-  );
+  return route.startsWith('/dashboard') || route.startsWith('/settings') || route.startsWith('/profile');
 };
 
 export const authConfig = {
@@ -21,8 +16,8 @@ export const authConfig = {
         if (isLoggedIn) return true;
         return false;
       } else if (isLoggedIn) {
-        // return Response.redirect(new URL('/', nextUrl));
-        return true;
+        return Response.redirect(new URL('/dashboard', nextUrl));
+        // return true;
       }
       return true;
     },

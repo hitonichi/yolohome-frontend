@@ -109,9 +109,10 @@ export const {
 
             // return userFromBe;
             return {
-              ...userFromBe,
+              ...userFromBe.data,
               id: '001',
-              name: userFromBe.firstName + ' ' + userFromBe.lastName,
+              name: userFromBe.data.userData.firstName + ' ' + userFromBe.data.userData.lastName,
+              email: userFromBe.data.userData.email,
             };
           } catch (e) {
             console.error(e);
