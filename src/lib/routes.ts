@@ -17,19 +17,14 @@ const ROUTES: Record<string, Route[]> = {
       href: '/dashboard',
     },
     {
-      label: 'Interview Preparation',
-      icon: 'briefCase',
-      href: '/dashboard/interview',
+      label: 'Devices',
+      icon: 'sqrGantt',
+      href: '/dashboard/devices',
     },
     {
-      label: 'Roadmaps',
-      icon: 'route',
-      href: '/dashboard/roadmaps',
-    },
-    {
-      label: 'Community',
-      icon: 'users',
-      href: '/dashboard/community',
+      label: 'Statistics',
+      icon: 'statistic',
+      href: '/dashboard/statistics',
     },
   ],
   userBase: [
