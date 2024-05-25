@@ -5,9 +5,14 @@ import ROUTES, { Route } from '@/lib/routes';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Separator } from '../ui/separator';
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 import clsx from 'clsx';
-import Icon from '../icon';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 
 const SideBar = () => {
   const pathname = usePathname();
@@ -19,21 +24,38 @@ const SideBar = () => {
     // return pathname.split('/')[1] == route.split('/')[1];
   };
 
+  const renderTooltip = (component: ReactNode, description: string) => {
+    return <TooltipProvider>
+      <Tooltip disableHoverableContent={!isHidden}>
+        <TooltipTrigger>{component}</TooltipTrigger>
+        {
+          isHidden &&
+          <TooltipContent side='right'>
+            <p>{description}</p>
+          </TooltipContent>
+        }
+      </Tooltip>
+    </TooltipProvider>
+  }
+
   const renderItems = (routes: Route[]) => {
     return (
       <>
         {routes.map(({ label, href, icon }) => (
-          <SideNav.Item
-            key={label}
-            label={isHidden ? '' : label}
-            icon={icon}
-            href={href}
-            as={Link}
-            onClick={() => {
-              console.log(`${label} clicked`);
-            }}
-            selected={isCurrentRoute(href)}
-          />
+          renderTooltip(
+            <SideNav.Item
+              key={label}
+              label={isHidden ? '' : label}
+              icon={icon}
+              href={href}
+              as={Link}
+              onClick={() => {
+                console.log(`${label} clicked`);
+              }}
+              selected={isCurrentRoute(href)}
+            />,
+            label
+          )
         ))}
       </>
     );
@@ -45,7 +67,7 @@ const SideBar = () => {
     <aside className={
       clsx(
         "h-full border-r-2 relative",
-        isHidden ? 'w-max' : 'col-span-2'
+        isHidden ? 'w-max' : 'col-span-2',
       )
     }>
       <SideNav className='h-max'>
@@ -75,12 +97,9 @@ const SideBar = () => {
             )
           }
         >
-
           <SideNav.Item
             key={'close'}
-            icon={
-              isHidden ? 'chevronsRight' : 'chevronsLeft'
-            }
+            icon={chevron}
             onClick={() => setIsHidden(!isHidden)}
           />
         </div>
