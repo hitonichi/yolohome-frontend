@@ -1,6 +1,7 @@
 'use client';
 
 import { useFeeds } from '@/app/hooks/useFeeds';
+import { useMQTT } from '@/app/hooks/useMQTT';
 import { FeedInfo, FeedSensorUnit, FeedSensorUnitKeys } from '@/app/types/feed';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardTitle } from '@/components/ui/card';
@@ -10,6 +11,7 @@ import { Fan, Lightbulb, LightbulbOff } from 'lucide-react';
 import { FC } from 'react';
 
 const QuickActions = () => {
+  useMQTT();
   const { data, error, isPending } = useFeeds();
 
   if (isPending) return <div>Loading...</div>;
