@@ -17,6 +17,8 @@ import {
   X,
   MessageCircle,
   SquareGantt,
+  ChevronsLeft,
+  ChevronsRight
 } from 'lucide-react';
 
 const Icon = ({ name, size = 24, className = '' }: { name: string; size?: number; className?: string }) => {
@@ -67,6 +69,12 @@ const Icon = ({ name, size = 24, className = '' }: { name: string; size?: number
     case 'message':
       WrappingEle = MessageCircle;
       break;
+    case 'chevronsLeft':
+      WrappingEle = ChevronsLeft;
+      break
+    case 'chevronsRight':
+      WrappingEle = ChevronsRight;
+      break;
     default:
       WrappingEle = Info;
       break;
@@ -76,3 +84,4 @@ const Icon = ({ name, size = 24, className = '' }: { name: string; size?: number
 };
 
 export default Icon;
+

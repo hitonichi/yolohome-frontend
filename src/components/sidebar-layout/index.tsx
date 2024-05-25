@@ -18,9 +18,7 @@ export default async function SideBarLayout({ children }: { children?: ReactNode
   if (session) {
     return (
       <div className="relative grid grid-cols-12 min-w-full h-[100vh] ">
-        <aside className="col-span-2 h-full border-r-2">
-          <SideBar />
-        </aside>
+        <SideBar />
         <div className="col-span-10 w-full h-full relative">
           <div className="w-full h-[var(--navbar-height)] flex flex-row justify-center gap-4 items-center border-b-2 px-4 py-2">
             <PageTitle />
