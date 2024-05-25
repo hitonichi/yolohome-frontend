@@ -6,6 +6,7 @@ import { useState } from 'react';
 import SidenavItem from './SidenavItem';
 import SideNavHeader from './SidenavHeader';
 import SideNavFooter from './SidenavFooter';
+import clsx from 'clsx';
 
 interface SideNavProps {
   className?: string;
@@ -47,7 +48,12 @@ const SideNav = ({ className, children }: SideNavProps) => {
 
   return (
     <SideNavContext.Provider value={{ sidenavState, setSidenavState }}>
-      <nav className="h-full p-4 pl-3 flex flex-col justify-between gap-2">{_children}</nav>
+      <nav className={
+        clsx(
+          "h-full p-4 pl-3 flex flex-col justify-between gap-2",
+          className
+        )
+      }>{_children}</nav>
     </SideNavContext.Provider>
   );
 };

@@ -5,9 +5,14 @@ import ROUTES, { Route } from '@/lib/routes';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Separator } from '../ui/separator';
+import { useState } from 'react';
+import clsx from 'clsx';
+import Icon from '../icon';
 
 const SideBar = () => {
   const pathname = usePathname();
+  const [isHidden, setIsHidden] = useState(true);
+
   const isCurrentRoute = (route: string) => {
     if (!pathname || !route) return false;
     return pathname == route;
@@ -20,7 +25,7 @@ const SideBar = () => {
         {routes.map(({ label, href, icon }) => (
           <SideNav.Item
             key={label}
-            label={label}
+            label={isHidden ? '' : label}
             icon={icon}
             href={href}
             as={Link}
@@ -34,26 +39,53 @@ const SideBar = () => {
     );
   };
 
+  const chevron = isHidden ? 'chevronsRight' : 'chevronsLeft';
+
   return (
-    <SideNav>
-      <>
+    <aside className={
+      clsx(
+        "h-full border-r-2 relative",
+        isHidden ? 'w-max' : 'col-span-2'
+      )
+    }>
+      <SideNav className='h-max'>
         <>
-          <SideNav.Header />
-          <Separator className="bg-muted-foreground mix-blend-color-burn h-[2px] my-2" />
+          <>
+            <SideNav.Header isHidden={isHidden} />
+            <Separator className="bg-muted-foreground mix-blend-color-burn h-[2px] my-2" />
+          </>
+          <div className="h-full flex flex-col gap-2 justify-start">
+            {/* In the future, this list of route should be fetched from an endpoint (access control service) */}
+            {renderItems(ROUTES.base)}
+            <Separator className="bg-muted-foreground mix-blend-color-burn h-[2px] my-1" />
+            {/* This one stays local, since all user should have these routes */}
+            {renderItems(ROUTES.userBase)}
+          </div>
+          <>
+            {/* <SideNav.Footer /> */}
+          </>
         </>
-        <div className="h-full flex flex-col gap-2 justify-start">
-          {/* In the future, this list of route should be fetched from an endpoint (access control service) */}
-          {renderItems(ROUTES.base)}
-          <Separator className="bg-muted-foreground mix-blend-color-burn h-[2px] my-1" />
-          {/* This one stays local, since all user should have these routes */}
-          {renderItems(ROUTES.userBase)}
+
+        <div
+          className={
+            clsx(
+              "flex w-full items-center",
+              isHidden ? 'justify-center' : 'justify-end mr-8',
+
+            )
+          }
+        >
+
+          <SideNav.Item
+            key={'close'}
+            icon={
+              isHidden ? 'chevronsRight' : 'chevronsLeft'
+            }
+            onClick={() => setIsHidden(!isHidden)}
+          />
         </div>
-        <>
-          <Separator className="bg-muted-foreground mix-blend-color-burn h-[2px] my-2" />
-          {/* <SideNav.Footer /> */}
-        </>
-      </>
-    </SideNav>
+      </SideNav>
+    </aside>
   );
 };
 
