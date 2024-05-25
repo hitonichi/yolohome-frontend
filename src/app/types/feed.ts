@@ -23,3 +23,13 @@ export enum FeedSensorUnit {
 }
 
 export type FeedSensorUnitKeys = keyof typeof FeedSensorUnit;
+
+export enum FeedType {
+  temperature = 'Temperature Sensor',
+  humidity = 'Humidity Sensor',
+  lux = 'Light Sensor',
+  fan = 'Fan',
+  light = 'Light Switch',
+}
+
+export type FeedTypeKeys = keyof typeof FeedType;
