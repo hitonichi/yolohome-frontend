@@ -5,9 +5,11 @@ import ROUTES, { Route } from '@/lib/routes';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Separator } from '../ui/separator';
+import { useMQTT } from '@/app/hooks/useMQTT';
 
 const SideBar = () => {
   const pathname = usePathname();
+  useMQTT();
   const isCurrentRoute = (route: string) => {
     if (!pathname || !route) return false;
     return pathname == route;
