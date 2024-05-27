@@ -11,8 +11,9 @@ export type FeedInfo = {
 
 export type FeedData = {
   id: string;
-  feed_id: string;
   value: string;
+  feed_id: string;
+  feed_key: string;
   created_at: string;
 };
 

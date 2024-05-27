@@ -25,3 +25,15 @@ export const getFeedDetail = async (queryKey: string[]) => {
   });
   return response.json();
 };
+
+export const getFeedHistory = async (queryKey: string[]) => {
+  // const headers = await buildHeaders();
+  console.log('[GET FEED HISTORY]', queryKey);
+  const [_, feedKey] = queryKey;
+  const response = await fetch(`https://io.adafruit.com/api/v2/${process.env.AIO_USERNAME}/feeds/${feedKey}/data`, {
+    // headers,
+    method: 'GET',
+    mode: 'no-cors',
+  });
+  return response.json();
+};
