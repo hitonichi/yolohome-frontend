@@ -37,3 +37,15 @@ export const getFeedHistory = async (queryKey: string[]) => {
   });
   return response.json();
 };
+
+export const updateFeed = async (feedKey: string, value: number) => {
+  const response = await fetch(`https://io.adafruit.com/api/v2/${process.env.AIO_USERNAME}/feeds/${feedKey}/data`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-AIO-Key': process.env.AIO_KEY || '',
+    },
+    body: JSON.stringify({ value: value }),
+  });
+  return response.json();
+};

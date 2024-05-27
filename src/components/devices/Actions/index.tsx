@@ -6,6 +6,8 @@ import { extractFeedType } from '@/lib/utils';
 import { FC } from 'react';
 import { useFeedDetail } from '@/app/hooks/useFeedDetail';
 import { Toggle } from '@/components/ui/toggle';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { updateFeed } from '@/app/services/feed';
 
 const NON_INTERACTABLE_FEEDS = ['temperature', 'humidity', 'lux'];
 
@@ -58,6 +60,25 @@ const FanActions: FC<FeedActionProps> = ({ feedKey }) => {
 
 const LightActions: FC<FeedActionProps> = ({ feedKey }) => {
   const { data, error, isLoading } = useFeedDetail(feedKey);
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: (newVal: number) => {
+      console.log('newVal', newVal);
+      return updateFeed(feedKey, newVal);
+    },
+    onSuccess: () => {
+      console.log('[ACTION] Mutate Success');
+      queryClient.invalidateQueries({
+        queryKey: ['feedDetail'],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['feedHistory'],
+      });
+    },
+    onError: (error) => {
+      console.error('[ACTION] Mutate Error:', error);
+    },
+  });
 
   if (error) return <div>Error: {error.message}</div>;
   if (isLoading) return <div>Loading...</div>;
@@ -66,20 +87,26 @@ const LightActions: FC<FeedActionProps> = ({ feedKey }) => {
   const isOn = Number(switchData.last_value) == 1;
 
   return (
-    <div className="w-full">
-      {/* <Label className="text-lg font-bold">Light Actions</Label> */}
-      <Label className="text-sm">Switch of {feedKey}</Label>
-      <Toggle
-        pressed={isOn}
-        variant={'outline'}
-        className="data-[state=on]:bg-primary data-[state=on]:text-white"
-        onClick={() => {
-          console.log('toggled');
-        }}
-      >
-        {isOn ? 'Turn OFF' : 'Turn ON'}
-      </Toggle>
-    </div>
+    <>
+      {mutation.isPending ? (
+        <div>Changing...</div>
+      ) : (
+        <div className="w-full flex justify-center">
+          {/* <Label className="text-lg font-bold">Light Actions</Label> */}
+          {/* <Label className="text-sm">Switch of {feedKey}</Label> */}
+          <Toggle
+            pressed={isOn}
+            variant={'outline'}
+            className="data-[state=on]:bg-primary data-[state=on]:text-white"
+            onClick={() => {
+              mutation.mutate(isOn ? 0 : 1);
+            }}
+          >
+            {isOn ? 'Turn OFF' : 'Turn ON'}
+          </Toggle>
+        </div>
+      )}
+    </>
   );
 };
 
