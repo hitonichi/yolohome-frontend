@@ -43,16 +43,12 @@ export default function LoginForm() {
   const { formState, control, handleSubmit, setError } = form;
 
   const onSubmit = async (value: TLoginFormSchema) => {
-    // console.log('Form data:', value);
     const res = await authenticate(value);
     if (res == 'Wrong credentials.') {
       setError('password', { type: 'manual', message: 'Wrong email or password.' });
       setError('email', { type: 'manual', message: 'Wrong email or password.' });
     }
-    // console.log('login--- ', res);
   };
-
-  // console.log(formState.errors);
 
   return (
     <>
