@@ -5,6 +5,7 @@ import { FeedInfo, FeedType, FeedTypeKeys } from '@/app/types/feed';
 import { Label } from '@/components/ui/label';
 import { extractFeedType } from '@/lib/utils';
 import { FC } from 'react';
+import DetailEntry from '../DetailEntry';
 
 export type DeviceDetailsProps = {
   feedKey: string;
@@ -22,13 +23,7 @@ const DeviceDetails: FC<DeviceDetailsProps> = ({ feedKey }) => {
   return (
     <div className="flex flex-col justify-start items-center gap-3">
       <Label className="text-xl mb-2 font-bold text-left w-full">Details</Label>
-      {/* {data &&
-        Object.entries(data).map(([key, value]) => (
-          <div key={key} className="grid grid-cols-2 gap-2">
-            <div className="col-span-1">{key}</div>
-            <div className="col-span-1">{value}</div>
-          </div>
-        ))} */}
+
       <DetailEntry title="Device Type" value={FeedType[extractFeedType(feedDetail.key) as FeedTypeKeys]} />
       <DetailEntry title="Name" value={feedDetail.name} />
       <DetailEntry title="Created at" value={feedDetail.created_at} />
@@ -36,12 +31,5 @@ const DeviceDetails: FC<DeviceDetailsProps> = ({ feedKey }) => {
     </div>
   );
 };
-
-const DetailEntry: FC<{ title: string; value: string }> = ({ title, value }) => (
-  <div className="w-full grid grid-cols-3 gap-2">
-    <Label className="col-span-1 font-semibold text-left">{title}:</Label>
-    <Label className="col-span-2 text-right">{value}</Label>
-  </div>
-);
 
 export default DeviceDetails;

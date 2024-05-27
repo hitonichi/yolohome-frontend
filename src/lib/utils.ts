@@ -25,3 +25,10 @@ export function calcDayDifference(date: string) {
   const diff = now.getTime() - then.getTime();
   return Math.floor(diff / (1000 * 60 * 60 * 24));
 }
+
+export function calcHrDiff(date: string) {
+  const now = new Date();
+  const then = new Date(date);
+  const diff = now.getTime() - then.getTime();
+  return Math.floor(diff / (1000 * 60 * 60));
+}
