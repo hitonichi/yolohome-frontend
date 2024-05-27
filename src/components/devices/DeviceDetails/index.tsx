@@ -7,12 +7,12 @@ import { extractFeedType } from '@/lib/utils';
 import { FC } from 'react';
 
 export type DeviceDetailsProps = {
-  feed: FeedInfo;
+  feedKey: string;
 };
-const DeviceDetails: FC<DeviceDetailsProps> = ({ feed }) => {
-  console.log('[DeviceDetails] feed', feed);
+const DeviceDetails: FC<DeviceDetailsProps> = ({ feedKey }) => {
+  console.log('[DeviceDetails] feedKey', feedKey);
 
-  const { data, error, isLoading } = useFeedDetail(feed.key);
+  const { data, error, isLoading } = useFeedDetail(feedKey);
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
@@ -21,6 +21,7 @@ const DeviceDetails: FC<DeviceDetailsProps> = ({ feed }) => {
   const feedDetail = data as FeedInfo;
   return (
     <div className="flex flex-col justify-start items-center gap-3">
+      <Label className="text-xl mb-2 font-bold text-left w-full">Details</Label>
       {/* {data &&
         Object.entries(data).map(([key, value]) => (
           <div key={key} className="grid grid-cols-2 gap-2">
