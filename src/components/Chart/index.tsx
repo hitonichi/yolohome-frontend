@@ -10,7 +10,7 @@ interface LineProps {
   unit: string;
 }
 
-const Chart: FC<LineProps> = ({ unit = 'Temperature', data = [] }) => {
+const Chart: FC<LineProps> = ({ unit = '', data = [] }) => {
   const options = {
     responsive: true,
     scales: {
@@ -32,25 +32,12 @@ const Chart: FC<LineProps> = ({ unit = 'Temperature', data = [] }) => {
           display: true,
           text: unit,
         },
+        ticks: {
+          maxTicksLimit: 6,
+        },
       },
     },
   };
-
-  // const [rawData, setRawData] = useState<any>(null);
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await fetch(`https://io.adafruit.com/api/v2/bentin345/feeds/pihome-test-temperature/data`);
-  //       const data = await response.json();
-  //       console.log('rawData:', data);
-  //       setRawData(data.reverse());
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-  //   fetchData();
-  // }, []);
 
   if (!data || data.length === 0) {
     return (
