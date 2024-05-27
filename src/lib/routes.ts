@@ -4,8 +4,13 @@ export interface Route {
   href: string;
 }
 
+export const isSubRoute = (route: string) => {
+  return route.startsWith('/dashboard/devices/');
+};
+
 export const getPageTitleByRoute = (route: string) => {
   const res = [...ROUTES.base, ...ROUTES.userBase].find((r) => r.href == route);
+  if (route.startsWith('/dashboard/devices/')) return 'Device Details';
   return res ? res.label : 'Unknown route';
 };
 

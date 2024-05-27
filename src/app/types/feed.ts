@@ -11,8 +11,9 @@ export type FeedInfo = {
 
 export type FeedData = {
   id: string;
-  feed_id: string;
   value: string;
+  feed_id: string;
+  feed_key: string;
   created_at: string;
 };
 
@@ -23,3 +24,13 @@ export enum FeedSensorUnit {
 }
 
 export type FeedSensorUnitKeys = keyof typeof FeedSensorUnit;
+
+export enum FeedType {
+  temperature = 'Temperature Sensor',
+  humidity = 'Humidity Sensor',
+  lux = 'Light Sensor',
+  fan = 'Fan',
+  light = 'Light Switch',
+}
+
+export type FeedTypeKeys = keyof typeof FeedType;
