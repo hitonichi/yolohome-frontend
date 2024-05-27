@@ -1,16 +1,30 @@
 'use client';
 
 import { useFeeds } from '@/app/hooks/useFeeds';
+import { updateFeed } from '@/app/services/feed';
 import { FeedInfo, FeedSensorUnit, FeedSensorUnitKeys } from '@/app/types/feed';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { extractFeedType } from '@/lib/utils';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Fan, Lightbulb, LightbulbOff } from 'lucide-react';
-import { FC } from 'react';
+import { FC, use } from 'react';
 
 const QuickActions = () => {
   const { data, error, isPending } = useFeeds();
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: (data: { feedKey: string; value: number }) => {
+      return updateFeed(data.feedKey, data.value);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['feeds'] });
+    },
+    onError: (error) => {
+      console.error('Error updating feed', error);
+    },
+  });
 
   if (isPending) return <div>Loading...</div>;
 
@@ -31,13 +45,15 @@ const QuickActions = () => {
         </div>
       );
     } else if (['light'].includes(feedType)) {
+      const isOn = feed.last_value === '1';
       return (
-        <Button className={`flex justify-center items-center w-20 h-20 ${feed.last_value ? '' : 'bg-gray-300'}`}>
-          {feed.last_value ? (
-            <Lightbulb className="text-white" size={48} />
-          ) : (
-            <LightbulbOff className="text-white" size={48} />
-          )}
+        <Button
+          onClick={() => {
+            mutation.mutate({ feedKey: feed.key, value: isOn ? 0 : 1 });
+          }}
+          className={`flex justify-center items-center w-20 h-20 shadow-lg ${isOn ? '' : 'bg-gray-300'}`}
+        >
+          {isOn ? <Lightbulb className="text-white" size={48} /> : <LightbulbOff className="text-white" size={48} />}
         </Button>
       );
     } else if (['fan'].includes(feedType)) {
@@ -47,16 +63,18 @@ const QuickActions = () => {
         </Button>
       );
     }
-    return <Label className="text-md text-gray-400">Fan</Label>;
+    return <Label className="text-md text-gray-400">Unknown Device</Label>;
   };
 
   return (
     <div className="grid gap-2 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-2">
-      {feeds.map((feed) => (
-        <QuickActionCard key={feed.id} title={feed.name}>
-          {renderFeedData(feed)}
-        </QuickActionCard>
-      ))}
+      {mutation.isPending && <div className="col-span-full flex justify-center items-center">Changing...</div>}
+      {!mutation.isPending &&
+        feeds.map((feed) => (
+          <QuickActionCard key={feed.id} title={feed.name}>
+            {renderFeedData(feed)}
+          </QuickActionCard>
+        ))}
     </div>
   );
 };
