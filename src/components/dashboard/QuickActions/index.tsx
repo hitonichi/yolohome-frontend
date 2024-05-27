@@ -2,10 +2,11 @@
 
 import { useFeeds } from '@/app/hooks/useFeeds';
 import { updateFeed } from '@/app/services/feed';
-import { FeedInfo, FeedSensorUnit, FeedSensorUnitKeys } from '@/app/types/feed';
+import { FAN_POWERS, FeedInfo, FeedSensorUnit, FeedSensorUnitKeys } from '@/app/types/feed';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { extractFeedType } from '@/lib/utils';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Fan, Lightbulb, LightbulbOff } from 'lucide-react';
@@ -57,10 +58,34 @@ const QuickActions = () => {
         </Button>
       );
     } else if (['fan'].includes(feedType)) {
+      const power = Number(feed.last_value) / 25;
+      const fanLabel = FAN_POWERS.find((val) => val.value === power * 25)?.label;
       return (
-        <Button className={`flex justify-center items-center w-20 h-20 ${feed.last_value ? '' : 'bg-gray-300'}`}>
-          <Fan className="text-white" size={48} />
-        </Button>
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button
+              className={`shadow-lg flex flex-col justify-between items-center w-20 h-20 text-white ${power === 0 ? 'bg-gray-300' : ''}`}
+            >
+              <Fan className="flex-1" size={28} />
+              <Label className="text-lg">{fanLabel}</Label>
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-32 space-y-3">
+            {FAN_POWERS.map((val, idx) => {
+              return (
+                <Button
+                  key={idx}
+                  className="w-full"
+                  onClick={() => {
+                    mutation.mutate({ feedKey: feed.key, value: val.value });
+                  }}
+                >
+                  {val.label}
+                </Button>
+              );
+            })}
+          </PopoverContent>
+        </Popover>
       );
     }
     return <Label className="text-md text-gray-400">Unknown Device</Label>;

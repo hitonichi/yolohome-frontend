@@ -1,6 +1,6 @@
 'use client';
 
-import { FeedInfo, FeedType, FeedTypeKeys } from '@/app/types/feed';
+import { FAN_POWERS, FeedInfo, FeedType, FeedTypeKeys } from '@/app/types/feed';
 import { Label } from '@/components/ui/label';
 import { extractFeedType } from '@/lib/utils';
 import { FC } from 'react';
@@ -43,29 +43,6 @@ const DeviceActions: React.FC<DeviceActionsProps> = ({ feedKey }) => {
     </div>
   );
 };
-
-const FAN_POWERS = [
-  {
-    label: 'OFF',
-    value: 0,
-  },
-  {
-    label: '1',
-    value: 25,
-  },
-  {
-    label: '2',
-    value: 50,
-  },
-  {
-    label: '3',
-    value: 75,
-  },
-  {
-    label: 'MAX',
-    value: 100,
-  },
-];
 
 interface FeedActionProps {
   feedKey: string;
