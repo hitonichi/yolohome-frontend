@@ -34,3 +34,30 @@ export enum FeedType {
 }
 
 export type FeedTypeKeys = keyof typeof FeedType;
+
+export const FAN_POWERS = [
+  {
+    label: 'OFF',
+    value: 0,
+  },
+  {
+    label: '1',
+    value: 1,
+  },
+  {
+    label: '2',
+    value: 2,
+  },
+  {
+    label: '3',
+    value: 3,
+  },
+  {
+    label: '4',
+    value: 4,
+  },
+  {
+    label: 'MAX',
+    value: 5,
+  },
+];
