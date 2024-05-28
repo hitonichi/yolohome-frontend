@@ -1,16 +1,26 @@
 'use client';
-import { Chart as ChartJS, CategoryScale, LinearScale, Tooltip, PointElement, LineElement, scales } from 'chart.js';
-import { FC, useEffect, useState } from 'react';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  Tooltip,
+  PointElement,
+  LineElement,
+  scales,
+  ChartData,
+} from 'chart.js';
+import { FC } from 'react';
 import { Line } from 'react-chartjs-2';
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip);
 
-interface LineProps {
+export interface LineProps {
   id?: string;
   data: any;
   unit: string;
+  type?: string;
 }
 
-const Chart: FC<LineProps> = ({ unit = '', data = [] }) => {
+const Chart: FC<LineProps> = ({ unit = '', data = [], type = '' }) => {
   const options = {
     responsive: true,
     scales: {
@@ -47,7 +57,7 @@ const Chart: FC<LineProps> = ({ unit = '', data = [] }) => {
     );
   }
 
-  const chartData = {
+  const chartData: ChartData<'line', any, unknown> = {
     labels: data.map((entry: any) => new Date(entry.created_at).toLocaleString('en-GB', { timeZone: 'UTC' })),
     datasets: [
       {
@@ -59,6 +69,10 @@ const Chart: FC<LineProps> = ({ unit = '', data = [] }) => {
       },
     ],
   };
+
+  if (type === 'stepped') {
+    chartData.datasets[0].stepped = true;
+  }
 
   return (
     <div>

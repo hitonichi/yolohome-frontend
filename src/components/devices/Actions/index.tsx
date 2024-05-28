@@ -27,7 +27,6 @@ const DeviceActions: React.FC<DeviceActionsProps> = ({ feedKey }) => {
     }
   };
 
-  console.log('[ACTIONS]', feedType);
   if (!feedType || NON_INTERACTABLE_FEEDS.includes(extractFeedType(feedKey) as FeedType)) return null;
 
   return (

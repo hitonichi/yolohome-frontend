@@ -13,11 +13,11 @@ const FanActions: FC<FeedActionProps> = ({ feedKey }) => {
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: (newVal: number) => {
-      console.log('newVal', newVal);
+      // console.log('newVal', newVal);
       return updateFeed(feedKey, newVal);
     },
     onSuccess: () => {
-      console.log('[ACTION] Mutate Success');
+      // console.log('[ACTION] Mutate Success');
       queryClient.invalidateQueries({
         queryKey: ['feedDetail'],
       });

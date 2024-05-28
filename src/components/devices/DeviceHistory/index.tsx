@@ -31,9 +31,20 @@ const DeviceHistory: FC<DeviceHistoryProps> = ({ feedKey }) => {
   return (
     <div className="flex flex-col gap-3">
       <Label className="text-xl mb-2 font-bold text-left w-full">History</Label>
-      {mounted && <Chart data={fmt} unit={FeedSensorUnit[extractFeedType(feedInfo.key) as FeedSensorUnitKeys]} />}
+      {mounted && (
+        <Chart
+          data={fmt}
+          unit={FeedSensorUnit[extractFeedType(feedInfo.key) as FeedSensorUnitKeys]}
+          type={parseChartType(feedInfo.key)}
+        />
+      )}
     </div>
   );
+};
+
+const parseChartType = (feedType: string) => {
+  if (['light', 'fan'].includes(extractFeedType(feedType))) return 'stepped';
+  return '';
 };
 
 export default DeviceHistory;
