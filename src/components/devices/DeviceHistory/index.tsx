@@ -2,7 +2,7 @@
 
 import { useFeedHistory } from '@/app/hooks/useFeedHistory';
 import { FeedData, FeedInfo, FeedSensorUnit, FeedSensorUnitKeys } from '@/app/types/feed';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { useMounted } from '@/app/hooks/useMounted';
 import Chart from '@/components/Chart';
 import { Label } from '@/components/ui/label';
@@ -14,7 +14,8 @@ export type DeviceHistoryProps = {
 };
 const DeviceHistory: FC<DeviceHistoryProps> = ({ feedKey }) => {
   const mounted = useMounted();
-  const { data: feedHistory, error: historyError, isPending: feedHistoryPending } = useFeedHistory(feedKey);
+  const [period, setPeriod] = useState<'hour' | 'day' | 'week' | 'month'>('hour');
+  const { data: feedHistory, error: historyError, isPending: feedHistoryPending } = useFeedHistory(feedKey, period);
   const { data: feedInfo, error: infoError, isPending: infoPending } = useFeedDetail(feedKey);
 
   const error = historyError || infoError;
