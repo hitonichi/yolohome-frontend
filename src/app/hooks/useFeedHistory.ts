@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { FeedData } from '../types/feed';
 import { getFeedHistory } from '../services/feed';
 
-export const useFeedHistory = (key: string, type?: string) => {
+export const useFeedHistory = (key: string, type: string) => {
   let startTime = undefined;
 
   switch (type) {
@@ -23,7 +23,7 @@ export const useFeedHistory = (key: string, type?: string) => {
   console.log('startTime :>> ', startTime);
 
   return useQuery<FeedData[]>({
-    queryKey: ['feedHistory', key],
+    queryKey: ['feedHistory', key, type],
     queryFn: (q) => getFeedHistory(q.queryKey as unknown as string[], startTime),
     refetchInterval: 600000,
   });
