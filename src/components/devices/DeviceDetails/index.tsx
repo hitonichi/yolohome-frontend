@@ -11,13 +11,10 @@ export type DeviceDetailsProps = {
   feedKey: string;
 };
 const DeviceDetails: FC<DeviceDetailsProps> = ({ feedKey }) => {
-  console.log('[DeviceDetails] feedKey', feedKey);
-
   const { data, error, isLoading } = useFeedDetail(feedKey);
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
-  console.log('DATA', data);
 
   const feedDetail = data as FeedInfo;
   return (
