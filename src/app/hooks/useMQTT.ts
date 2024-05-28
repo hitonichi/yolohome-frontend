@@ -1,5 +1,6 @@
 'use client';
 
+import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { Socket, io } from 'socket.io-client';
 
@@ -10,6 +11,7 @@ export type MqttMessage = {
 
 export const useMQTT = () => {
   // Socket.io
+  const queryClient = useQueryClient();
   const [socket, setSocket] = useState<Socket | null>(null);
 
   useEffect(() => {
@@ -21,7 +23,14 @@ export const useMQTT = () => {
 
     socket.on('message', (msg: string) => {
       const mqttMessage = JSON.parse(msg) as MqttMessage;
-      console.log(mqttMessage);
+      console.log('[MQTT] got msg', mqttMessage);
+      if (false) {
+        // TODO: handle alert feeds
+      } else {
+        queryClient.invalidateQueries({ queryKey: ['feeds'] });
+        queryClient.invalidateQueries({ queryKey: ['feedDetail'] });
+        queryClient.invalidateQueries({ queryKey: ['feedHistory'] });
+      }
     });
 
     return () => {
