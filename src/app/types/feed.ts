@@ -42,18 +42,22 @@ export const FAN_POWERS = [
   },
   {
     label: '1',
-    value: 25,
+    value: 1,
   },
   {
     label: '2',
-    value: 50,
+    value: 2,
   },
   {
     label: '3',
-    value: 75,
+    value: 3,
+  },
+  {
+    label: '4',
+    value: 4,
   },
   {
     label: 'MAX',
-    value: 100,
+    value: 5,
   },
 ];

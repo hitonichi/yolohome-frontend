@@ -81,15 +81,14 @@ const FanActions: FC<FeedActionProps> = ({ feedKey }) => {
           <div className="w-full px-6 ">
             <Progress
               className="outline outline-1 outline-primary/10 rounded-none bg-primary/10"
-              value={Number(data?.last_value)}
-              // max={1}
+              value={Number(data?.last_value) * 20}
             />
           </div>
           <div className="w-full flex justify-between items-center">
             {FAN_POWERS.map((val, idx) => {
               return (
                 <div key={idx} className={`w-12 flex flex-col justify-start items-center`}>
-                  <Separator className="h-6 bg-primary/30" orientation="vertical" />
+                  <Separator className="h-6 w-[1px] bg-primary/30" orientation="vertical" />
                   <p className="font-bold">{val.label}</p>
                 </div>
               );

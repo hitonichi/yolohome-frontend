@@ -58,8 +58,8 @@ const QuickActions = () => {
         </Button>
       );
     } else if (['fan'].includes(feedType)) {
-      const power = Number(feed.last_value) / 25;
-      const fanLabel = FAN_POWERS.find((val) => val.value === power * 25)?.label;
+      const power = Number(feed.last_value);
+      const fanLabel = FAN_POWERS.find((val) => val.value === power)?.label;
       return (
         <Popover>
           <PopoverTrigger asChild>
