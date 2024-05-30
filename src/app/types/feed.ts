@@ -31,6 +31,7 @@ export enum FeedType {
   lux = 'Light Sensor',
   fan = 'Fan',
   light = 'Light Switch',
+  earthquake = 'Earthquake Sensor',
 }
 
 export type FeedTypeKeys = keyof typeof FeedType;
