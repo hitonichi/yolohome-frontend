@@ -6,7 +6,7 @@ import { extractFeedType } from '@/lib/utils';
 import FanActions from './FanActions';
 import LightActions from './LightActions';
 
-const NON_INTERACTABLE_FEEDS = ['temperature', 'humidity', 'lux'];
+const NON_INTERACTABLE_FEEDS = ['temperature', 'humidity', 'lux', 'earthquake'];
 
 export interface DeviceActionsProps {
   feedKey: string;

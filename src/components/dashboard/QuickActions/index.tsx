@@ -9,7 +9,7 @@ import { Label } from '@/components/ui/label';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { extractFeedType } from '@/lib/utils';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { Fan, Lightbulb, LightbulbOff } from 'lucide-react';
+import { AlertTriangle, Fan, Lightbulb, LightbulbOff } from 'lucide-react';
 import { FC, use } from 'react';
 
 const QuickActions = () => {
@@ -86,6 +86,22 @@ const QuickActions = () => {
             })}
           </PopoverContent>
         </Popover>
+      );
+    } else if (['earthquake'].includes(feedType)) {
+      const isOn = feed.last_value === '1';
+      return (
+        <>
+          {isOn && (
+            <Button className="flex justify-center items-center w-20 h-20 bg-red-700 disabled:opacity-100" disabled>
+              <AlertTriangle className="" size={48} />
+            </Button>
+          )}
+          {!isOn && (
+            <Button className="flex justify-center items-center w-20 h-20 " disabled>
+              <AlertTriangle className="" size={48} />
+            </Button>
+          )}
+        </>
       );
     }
     return <Label className="text-md text-gray-400">Unknown Device</Label>;
